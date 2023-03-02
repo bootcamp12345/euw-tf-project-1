@@ -1,0 +1,26 @@
+trigger:
+  branches:
+    include:
+    - main
+    - master
+
+jobs:
+- job: TF_Apply_Dev
+  displayName: Terraform Apply DEV
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+  - script: |
+      export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
+      export ARM_TENANT_ID="$(tf-app-tenant-id)"
+      export ARM_CLIENT_ID="$(tf-app-id)"
+      export ARM_CLIENT_SECRET="$(tf-app-pw)"
+      pwd
+      ls -al
+      echo $ARM_SUBSCRIPTION_ID
+      echo $ARM_TENANT_ID
+      echo $ARM_CLIENT_ID
+      echo $ARM_CLIENT_SECRET
+      cd scripts
+      terraform apply -var-file=../config/dev-poc/parameters.tf -backend-config=../config/dev-poc/dev.backend.tfbackend -auto-approve
