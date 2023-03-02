@@ -1,7 +1,11 @@
 trigger:
-  pr:
-  - main
-  - pr-*
+  branches:
+    include:
+    - main
+    - pr-*
+pr:
+- main
+- pr-*
 
 jobs:
 - job: TF_Init
