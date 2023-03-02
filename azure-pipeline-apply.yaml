@@ -49,4 +49,4 @@ jobs:
       echo $ARM_CLIENT_ID
       echo $ARM_CLIENT_SECRET
       cd scripts
-      terraform apply -var-file=../config/dev-poc/parameters.tf -var subscription_id=$(tf-app-subscription-id) -var tenant_id=$(tf-app-tenant-id) TFPLANDEV
+      terraform apply TFPLANDEV
