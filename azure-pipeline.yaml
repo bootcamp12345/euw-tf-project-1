@@ -1,0 +1,50 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+trigger:
+- master
+
+jobs:
+- job: TF_Init
+  displayName: Terraform
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+  - task: AzureCLI@2
+    displayName: Azure CLI Login
+    inputs:
+      azureSubscription: 'tf-subscription'
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        az --version
+        az account show
+  - script: |
+      export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
+      export ARM_TENANT_ID="$(tf-app-tenant-id)"
+      export ARM_CLIENT_ID="$(tf-app-id)"
+      export ARM_CLIENT_SECRET="$(tf-app-pw)"
+      pwd
+      ls -al
+      echo $ARM_SUBSCRIPTION_ID
+      echo $ARM_TENANT_ID
+      echo $ARM_CLIENT_ID
+      echo $ARM_CLIENT_SECRET
+      cd scripts
+      terraform init -var-file=../config/dev-poc/parameters.tf -backend-config=../config/dev-poc/dev.backend.tfbackend
+  - script: |
+      export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
+      export ARM_TENANT_ID="$(tf-app-tenant-id)"
+      export ARM_CLIENT_ID="$(tf-app-id)"
+      export ARM_CLIENT_SECRET="$(tf-app-pw)"
+      pwd
+      ls -al
+      echo subscription_id is $ARM_SUBSCRIPTION_ID
+      echo tenant_id is $ARM_TENANT_ID
+      echo client_id is $ARM_CLIENT_ID
+      echo secret is $ARM_CLIENT_SECRET     
+      cd scripts
+      echo Starting TF Plan...
+      terraform plan -var-file=../config/dev-poc/parameters.tf -var subscription_id=$(tf-app-subscription-id) -var tenant_id=$(tf-app-tenant-id)
