@@ -1,5 +1,8 @@
 trigger:
-- main
+  branches:
+    include:
+    - main
+    - master
 
 jobs:
 - job: TF_Apply_Dev
@@ -7,6 +10,7 @@ jobs:
   pool:
     vmImage: ubuntu-latest
   steps:
+  - checkout: self
   - script: |
       export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
       export ARM_TENANT_ID="$(tf-app-tenant-id)"

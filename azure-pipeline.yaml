@@ -1,6 +1,9 @@
 pr:
-- main
-- pr-*
+  branches:
+    include:
+    - main
+    - master
+    - pr-*
 
 jobs:
 - job: TF_Init
