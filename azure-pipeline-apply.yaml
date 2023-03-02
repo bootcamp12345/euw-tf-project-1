@@ -2,7 +2,6 @@ trigger:
   branches:
     include:
     - main
-    - master
 
 jobs:
 - job: TF_Apply_Dev
