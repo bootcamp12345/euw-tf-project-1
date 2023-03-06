@@ -14,6 +14,7 @@ module "app_insights" {
   resource_group                = var.app_insights_resource_group_name
   app_insights_additional_tags  = var.app_insights_additional_tags
   application_insights          = var.application_insights
+  depends_on                    = [module.resource_groups]
 }
 resource "azurerm_service_plan" "example" {
   name                = "${var.app_service_plan_name}-${var.env}"
@@ -21,4 +22,5 @@ resource "azurerm_service_plan" "example" {
   location            = module.resource_groups.resource_group_ids_map["${var.resource_groups["location"]}"]
   os_type             = var.asp_os_type
   sku_name            = var.asp_sku
+  depends_on          = [module.app_insights]
 }
