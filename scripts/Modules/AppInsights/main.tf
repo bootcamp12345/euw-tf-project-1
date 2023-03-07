@@ -3,7 +3,7 @@ data "azurerm_resource_group" "this" {
 }
 
 locals {
-  tags = merge(var.app_insights_additional_tags, data.azurerm_resource_group.this.tags))
+  tags = merge(var.app_insights_additional_tags, data.azurerm_resource_group.this.tags)
   #resourcegroup_state_exists = length(values(data.terraform_remote_state.resourcegroup.outputs)) == 0 ? false : true
 }
 
