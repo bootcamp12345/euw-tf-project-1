@@ -21,7 +21,7 @@ resource "azurerm_service_plan" "example" {
   #resource_group_name = module.resource_groups.resource_group_ids_map.0.resource_group
   #location            = module.resource_groups.resource_group_ids_map.0.location
   resource_group_name = lookup(var.resource_groups,"name")
-  location            = lookup(var.resource_group,"location")
+  location            = lookup(var.resource_groups,"location")
   os_type             = var.asp_os_type
   sku_name            = var.asp_sku
   depends_on          = [module.app_insights]
