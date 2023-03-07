@@ -1,5 +1,9 @@
 trigger:
-- main
+  branches:
+    include:
+    - main
+    exclude:
+    - pr-*
 
 jobs:
 - job: TF_Apply_Dev
