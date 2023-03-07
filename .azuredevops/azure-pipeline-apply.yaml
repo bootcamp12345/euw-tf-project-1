@@ -2,7 +2,6 @@ trigger:
   branches:
     include:
     - main
-    - master
 
 jobs:
 - job: TF_Apply_Dev
@@ -23,7 +22,7 @@ jobs:
       echo $ARM_CLIENT_ID
       echo $ARM_CLIENT_SECRET
       cd scripts
-      terraform init -var-file=../config/dev-poc/parameters.tf -backend-config=../config/dev-poc/dev.backend.tfbackend
+      terraform init -var-file=../config/dev-poc/parameters.tf -var-file=../config/dev-poc/applicationinsights.auto.tfvars -var-file=../config/dev-poc/resourcegroups.auto.tfvars -backend-config=../config/dev-poc/dev.backend.tfbackend
   - script: |
       export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
       export ARM_TENANT_ID="$(tf-app-tenant-id)"
@@ -36,7 +35,7 @@ jobs:
       echo $ARM_CLIENT_ID
       echo $ARM_CLIENT_SECRET
       cd scripts
-      terraform plan -var-file=../config/dev-poc/parameters.tf -var subscription_id=$(tf-app-subscription-id) -var tenant_id=$(tf-app-tenant-id) -out=TFPLANDEV
+      terraform plan -var-file=../config/dev-poc/parameters.tf -var-file=../config/dev-poc/applicationinsights.auto.tfvars -var-file=../config/dev-poc/resourcegroups.auto.tfvars -var subscription_id=$(tf-app-subscription-id) -var tenant_id=$(tf-app-tenant-id) -out TFPLANDEV
   - script: |
       export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
       export ARM_TENANT_ID="$(tf-app-tenant-id)"
