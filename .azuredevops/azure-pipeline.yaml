@@ -1,5 +1,5 @@
 pr:
-- main
+- pr-*
 
 jobs:
 - job: TF_Init
