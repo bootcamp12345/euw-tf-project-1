@@ -11,7 +11,7 @@ module "resource_groups" {
 
 module "app_insights" {
   source                        = "./Modules/AppInsights"
-  resource_group                = var.app_insights_resource_group_name
+  resource_group_name           = var.app_insights_resource_group_name
   app_insights_additional_tags  = var.app_insights_additional_tags
   application_insights          = var.application_insights
   depends_on                    = [module.resource_groups]
