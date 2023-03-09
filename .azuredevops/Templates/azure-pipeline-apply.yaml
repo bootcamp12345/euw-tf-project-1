@@ -1,12 +1,15 @@
-trigger:
-  branches:
-    include:
-    - main
-    exclude:
-    - pr-*
+Parameters:
+- name: tf-app-subscription-id
+  default: ''
+- name: tf-app-tenant-id
+  default: ''
+- name: tf-app-subscription-id
+  default: ''
+- name: tf-app-pw
+  default: ''
 
 jobs:
-- job: TF_Apply_Dev
+- job: 
   displayName: Terraform Apply DEV
   pool:
     vmImage: ubuntu-latest

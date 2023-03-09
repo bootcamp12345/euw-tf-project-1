@@ -1,0 +1,17 @@
+pr:
+  branches:
+    include:
+    - pr-*
+    exclude:
+    - main
+
+jobs:
+- template: ./Templates/azure-pipeline.yaml
+  parameters:
+    tf-app-subscription-id: $(tf-app-subscription-id)
+    tf-app-tenant-id: $(tf-app-tenant-id)
+    tf-app-pw: $(tf-app-pw)
+    tf-app-id: $(tf-app-id)
+    env: Dev
+    backend_config: ../config/dev-poc/dev.backend.tfbackend
+    
