@@ -1,4 +1,4 @@
-Parameters:
+parameters:
 - name: tf-app-subscription-id
   default: ''
 - name: tf-app-tenant-id
