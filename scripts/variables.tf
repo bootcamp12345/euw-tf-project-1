@@ -28,6 +28,9 @@ variable "asp_sku" {
     type = string
 }
 
+######################################
+########RESOURCE_GRP##################
+######################################
 variable "resource_groups" {
   description = "Resource groups"
   type = map(object({
