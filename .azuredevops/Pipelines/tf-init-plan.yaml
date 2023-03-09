@@ -6,7 +6,7 @@ pr:
     - main
 
 jobs:
-- template: ./Templates/azure-pipeline.yaml
+- template: ../Templates/azure-pipeline.yaml
   parameters:
     tf-app-subscription-id: $(tf-app-subscription-id)
     tf-app-tenant-id: $(tf-app-tenant-id)
