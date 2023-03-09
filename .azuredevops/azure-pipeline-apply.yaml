@@ -51,6 +51,7 @@ jobs:
       terraform apply TFPLANDEV
 - job: TF_Apply_UAT
   displayName: Terraform Apply UAT
+  dependsOn: TF_Apply_Dev
   pool:
     vmImage: ubuntu-latest
   steps:
