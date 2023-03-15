@@ -6,12 +6,12 @@
 ####
 
 module "resource_groups" {
-    source          = "git@github.com:bootcamp12345/euw-tf-modules-1/Resource_Groups?ref=v2"
+    source          = "git@github.com:bootcamp12345/euw-tf-modules-1.git//Resource_Groups?ref=v2"
     resource_groups = var.resource_groups
 }
 
 module "app_insights" {
-  source                        = "git@github.com:bootcamp12345/euw-tf-modules-1/AppInsights?ref=v1"
+  source                        = "git@github.com:bootcamp12345/euw-tf-modules-1.git//AppInsights?ref=v1"
   resource_group_name           = var.app_insights_resource_group_name
   app_insights_additional_tags  = var.app_insights_additional_tags
   application_insights          = var.application_insights
