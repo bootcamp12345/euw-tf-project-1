@@ -17,6 +17,7 @@ module "app_insights" {
   application_insights          = var.application_insights
   depends_on                    = [module.resource_groups]
 }
+
 resource "azurerm_service_plan" "example" {
   name                = "${var.app_service_plan_name}-${var.env}"
   #resource_group_name = module.resource_groups.resource_group_ids_map.0.resource_group
