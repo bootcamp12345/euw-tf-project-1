@@ -1,0 +1,94 @@
+parameters:
+- name: tf-app-subscription-id
+  type: string
+  default: ''
+- name: tf-app-tenant-id
+  type: string
+  default: ''
+- name: tf-app-id
+  type: string
+  default: ''
+- name: tf-app-pw
+  type: string
+  default: ''
+- name: env
+  type: string
+  default: ''
+- name: backend_config
+  type: string
+  default: ''
+- name: known_host
+  default: ''
+  type: string
+- name: ssh_public_key
+  default: ''
+  type: string
+- name: sshKeySecureFile
+  default: ''
+  type: string
+- name: tf-subscription
+  default: 'tf-subscription'
+  type: string
+
+jobs:
+- job: Terraform_${{ parameters.env }}
+  displayName: Terraform_${{ parameters.env }}
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+  - task: AzureCLI@2
+    displayName: Azure CLI Login
+    inputs:
+      azureSubscription: ${{ parameters ['tf-subscription'] }}
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        az --version
+        az account show
+  - task: InstallSSHKey@0
+    inputs:
+      knownHostsEntry: ${{ parameters ['known_host'] }}
+      sshPublicKey: ${{ parameters ['ssh_public_key'] }}
+      sshKeySecureFile: ${{ parameters ['sshKeySecureFile'] }}
+  - script: |                                   
+      export ARM_SUBSCRIPTION_ID=${{ parameters ['tf-app-subscription-id'] }}
+      export ARM_TENANT_ID=${{ parameters ['tf-app-tenant-id'] }}
+      export ARM_CLIENT_ID=${{ parameters ['tf-app-id'] }}
+      export ARM_CLIENT_SECRET=${{ parameters ['tf-app-pw'] }}
+      pwd
+      ls -al
+      echo $ARM_SUBSCRIPTION_ID
+      echo $ARM_TENANT_ID
+      echo $ARM_CLIENT_ID
+      echo $ARM_CLIENT_SECRET
+      cd scripts
+      terraform init -backend-config=${{ parameters ['backend_config'] }}
+  - script: |
+      export ARM_SUBSCRIPTION_ID=${{ parameters ['tf-app-subscription-id'] }}
+      export ARM_TENANT_ID=${{ parameters ['tf-app-tenant-id'] }}
+      export ARM_CLIENT_ID=${{ parameters ['tf-app-id'] }}
+      export ARM_CLIENT_SECRET=${{ parameters ['tf-app-pw'] }}
+      pwd
+      ls -al
+      echo subscription_id is $ARM_SUBSCRIPTION_ID
+      echo tenant_id is $ARM_TENANT_ID
+      echo client_id is $ARM_CLIENT_ID
+      echo secret is $ARM_CLIENT_SECRET     
+      cd scripts
+      echo Starting TF Plan...
+      terraform plan -var-file=../config/dev-poc/parameters.tf -var-file=../config/dev-poc/applicationinsights.auto.tfvars -var-file=../config/dev-poc/resourcegroups.auto.tfvars -var subscription_id=$(tf-app-subscription-id) -var tenant_id=$(tf-app-tenant-id) -out TFPLAN
+  - script: |
+      export ARM_SUBSCRIPTION_ID=${{ parameters ['tf-app-subscription-id'] }}
+      export ARM_TENANT_ID=${{ parameters ['tf-app-tenant-id'] }}
+      export ARM_CLIENT_ID=${{ parameters ['tf-app-id'] }}
+      export ARM_CLIENT_SECRET=${{ parameters ['tf-app-pw'] }}
+      pwd
+      ls -al
+      echo subscription_id is $ARM_SUBSCRIPTION_ID
+      echo tenant_id is $ARM_TENANT_ID
+      echo client_id is $ARM_CLIENT_ID
+      echo secret is $ARM_CLIENT_SECRET     
+      cd scripts
+      echo Starting TF Plan...
+      terraform apply TFPLAN
