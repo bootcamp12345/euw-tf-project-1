@@ -54,7 +54,7 @@ jobs:
   - script: |                                   
       export ARM_SUBSCRIPTION_ID=${{ parameters ['tf-app-subscription-id'] }}
       export ARM_TENANT_ID=${{ parameters ['tf-app-tenant-id'] }}
-      export ARM_CLIENT_ID=${{ parameters ['tf-app-subscription-id'] }}
+      export ARM_CLIENT_ID=${{ parameters ['tf-app-id'] }}
       export ARM_CLIENT_SECRET=${{ parameters ['tf-app-pw'] }}
       pwd
       ls -al
