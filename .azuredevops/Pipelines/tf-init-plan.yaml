@@ -17,4 +17,5 @@ jobs:
     known_host: $(known_host)
     ssh_public_key: $(ssh_public_key)
     sshKeySecureFile: 'tf-modules'
+    tf-subscription: 'tf-subscription'
     

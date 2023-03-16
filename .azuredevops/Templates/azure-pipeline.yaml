@@ -25,6 +25,10 @@ parameters:
   type: string
 - name: sshKeySecureFile
   default: ''
+  type: string
+- name: tf-subscription
+  default: 'tf-subscription'
+  type: string
 
 jobs:
 - job: Terraform_${{ parameters.env }}
@@ -33,6 +37,15 @@ jobs:
     vmImage: ubuntu-latest
   steps:
   - checkout: self
+  - task: AzureCLI@2
+    displayName: Azure CLI Login
+    inputs:
+      azureSubscription: ${{ parameters ['tf-subscription'] }}
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        az --version
+        az account show
   - task: InstallSSHKey@0
     inputs:
       knownHostsEntry: ${{ parameters ['known_host'] }}
