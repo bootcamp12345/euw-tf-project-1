@@ -38,8 +38,8 @@ jobs:
       knownHostsEntry: $(known_host)
       sshPublicKey: $(ssh_public_key)
       sshKeySecureFile: $(sshKeySecureFile)
-  - script: |
-      export ARM_SUBSCRIPTION_ID=${{ parameters.tf-app-subscription-id }}
+  - script: |                                   
+      export ARM_SUBSCRIPTION_ID=${{ parameters ['tf-app-subscription-id'] }}
       export ARM_TENANT_ID=${{ parameters.tf-app-tenant-id }}
       export ARM_CLIENT_ID=${{ parameters.tf-app-subscription-id }}
       export ARM_CLIENT_SECRET=${{ parameters.tf-app-pw }}
