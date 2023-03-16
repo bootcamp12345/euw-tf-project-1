@@ -1,3 +1,4 @@
+trigger: none
 pr:
 - main
 
@@ -17,6 +18,11 @@ jobs:
       inlineScript: |
         az --version
         az account show
+  - task: InstallSSHKey@0
+    inputs:
+      knownHostsEntry: $(known_host)
+      sshPublicKey: $(ssh_public_key)
+      sshKeySecureFile: 'tf-modules'
   - script: |
       export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
       export ARM_TENANT_ID="$(tf-app-tenant-id)"

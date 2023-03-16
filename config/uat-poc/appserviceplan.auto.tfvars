@@ -79,8 +79,8 @@ app_service_plans = {
     reserved                     = true
     per_site_scaling             = false
     maximum_elastic_worker_count = 2
-    sku_tier                     = "Standard"
-    sku_size                     = "F1"
+    sku_tier                     = "Premium"
+    sku_size                     = "P1V2"
     sku_capacity                 = 1
   }
 }
