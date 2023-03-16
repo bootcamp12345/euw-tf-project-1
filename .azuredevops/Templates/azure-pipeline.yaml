@@ -1,20 +1,28 @@
 parameters:
 - name: tf-app-subscription-id
+  type: string
   default: ''
 - name: tf-app-tenant-id
+  type: string
   default: ''
 - name: tf-app-id
+  type: string
   default: ''
 - name: tf-app-pw
+  type: string
   default: ''
 - name: env
+  type: string
   default: ''
 - name: backend_config
+  type: string
   default: ''
 - name: known_host
   default: ''
+  type: string
 - name: ssh_public_key
   default: ''
+  type: string
 - name: sshKeySecureFile
   default: ''
 
