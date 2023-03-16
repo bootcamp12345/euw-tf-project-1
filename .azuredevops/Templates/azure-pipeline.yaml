@@ -27,8 +27,8 @@ parameters:
   default: ''
 
 jobs:
-- job: Terraform ${{ parameters.env }}
-  displayName: Terraform ${{ parameters.env }}
+- job: Terraform_${{ parameters.env }}
+  displayName: Terraform_${{ parameters.env }}
   pool:
     vmImage: ubuntu-latest
   steps:
