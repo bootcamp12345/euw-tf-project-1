@@ -1,0 +1,108 @@
+trigger:
+  branches:
+    include:
+    - main
+pr: none
+
+jobs:
+- job: TF_Apply_Dev
+  displayName: Terraform Apply DEV
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+  - task: InstallSSHKey@0
+    inputs:
+      knownHostsEntry: $(known_host)
+      sshPublicKey: $(ssh_public_key)
+      sshKeySecureFile: 'tf-modules'
+  - script: |
+      export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
+      export ARM_TENANT_ID="$(tf-app-tenant-id)"
+      export ARM_CLIENT_ID="$(tf-app-id)"
+      export ARM_CLIENT_SECRET="$(tf-app-pw)"
+      pwd
+      ls -al
+      echo $ARM_SUBSCRIPTION_ID
+      echo $ARM_TENANT_ID
+      echo $ARM_CLIENT_ID
+      echo $ARM_CLIENT_SECRET
+      cd scripts
+      terraform init -var-file=../config/dev-poc/parameters.tf -var-file=../config/dev-poc/applicationinsights.auto.tfvars -var-file=../config/dev-poc/resourcegroups.auto.tfvars -backend-config=../config/dev-poc/dev.backend.tfbackend
+  - script: |
+      export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
+      export ARM_TENANT_ID="$(tf-app-tenant-id)"
+      export ARM_CLIENT_ID="$(tf-app-id)"
+      export ARM_CLIENT_SECRET="$(tf-app-pw)"
+      pwd
+      ls -al
+      echo $ARM_SUBSCRIPTION_ID
+      echo $ARM_TENANT_ID
+      echo $ARM_CLIENT_ID
+      echo $ARM_CLIENT_SECRET
+      cd scripts
+      terraform plan -var-file=../config/dev-poc/parameters.tf -var-file=../config/dev-poc/applicationinsights.auto.tfvars -var-file=../config/dev-poc/resourcegroups.auto.tfvars -var subscription_id=$(tf-app-subscription-id) -var tenant_id=$(tf-app-tenant-id) -out TFPLANDEV
+  - script: |
+      export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
+      export ARM_TENANT_ID="$(tf-app-tenant-id)"
+      export ARM_CLIENT_ID="$(tf-app-id)"
+      export ARM_CLIENT_SECRET="$(tf-app-pw)"
+      pwd
+      ls -al
+      echo $ARM_SUBSCRIPTION_ID
+      echo $ARM_TENANT_ID
+      echo $ARM_CLIENT_ID
+      echo $ARM_CLIENT_SECRET
+      cd scripts
+      terraform apply TFPLANDEV
+- job: TF_Apply_UAT
+  displayName: Terraform Apply UAT
+  dependsOn: TF_Apply_Dev
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+  - checkout: self
+  - task: InstallSSHKey@0
+    inputs:
+      knownHostsEntry: $(known_host)
+      sshPublicKey: $(ssh_public_key)
+      sshKeySecureFile: 'tf-modules'
+  - script: |
+      export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
+      export ARM_TENANT_ID="$(tf-app-tenant-id)"
+      export ARM_CLIENT_ID="$(tf-app-id)"
+      export ARM_CLIENT_SECRET="$(tf-app-pw)"
+      pwd
+      ls -al
+      echo $ARM_SUBSCRIPTION_ID
+      echo $ARM_TENANT_ID
+      echo $ARM_CLIENT_ID
+      echo $ARM_CLIENT_SECRET
+      cd scripts
+      terraform init -backend-config=../config/uat-poc/uat.backend.tfbackend
+  - script: |
+      export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
+      export ARM_TENANT_ID="$(tf-app-tenant-id)"
+      export ARM_CLIENT_ID="$(tf-app-id)"
+      export ARM_CLIENT_SECRET="$(tf-app-pw)"
+      pwd
+      ls -al
+      echo $ARM_SUBSCRIPTION_ID
+      echo $ARM_TENANT_ID
+      echo $ARM_CLIENT_ID
+      echo $ARM_CLIENT_SECRET
+      cd scripts
+      terraform plan -var-file=../config/uat-poc/parameters.tf -var-file=../config/uat-poc/applicationinsights.auto.tfvars -var-file=../config/uat-poc/resourcegroups.auto.tfvars -var subscription_id=$(tf-app-subscription-id) -var tenant_id=$(tf-app-tenant-id) -out TFPLANUAT
+  - script: |
+      export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
+      export ARM_TENANT_ID="$(tf-app-tenant-id)"
+      export ARM_CLIENT_ID="$(tf-app-id)"
+      export ARM_CLIENT_SECRET="$(tf-app-pw)"
+      pwd
+      ls -al
+      echo $ARM_SUBSCRIPTION_ID
+      echo $ARM_TENANT_ID
+      echo $ARM_CLIENT_ID
+      echo $ARM_CLIENT_SECRET
+      cd scripts
+      terraform apply TFPLANUAT

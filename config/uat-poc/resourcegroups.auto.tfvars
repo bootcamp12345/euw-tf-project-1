@@ -1,9 +1,3 @@
-location              = "West Europe"
-env                   = "uat"
-resource_group_name   = "asp-rg"
-app_service_plan_name = "asptoday1234"
-asp_os_type           = "Linux"
-asp_sku               = "F1"
 resource_groups = {
   resource_group_1 = {
     name     = "asp-uat-rg"

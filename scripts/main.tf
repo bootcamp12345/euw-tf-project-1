@@ -3,19 +3,21 @@
 #   name     = "${var.resource_group_name}-${var.env}"
 #   location = var.location
 # }
+####
 
 module "resource_groups" {
-    source          = "./Modules/Resource_Groups/"
+    source          = "git@github.com:bootcamp12345/euw-tf-modules-1.git//Resource_Groups?ref=v2"
     resource_groups = var.resource_groups
 }
 
 module "app_insights" {
-  source                        = "./Modules/AppInsights"
+  source                        = "git@github.com:bootcamp12345/euw-tf-modules-1.git//AppInsights?ref=v1"
   resource_group_name           = var.app_insights_resource_group_name
   app_insights_additional_tags  = var.app_insights_additional_tags
   application_insights          = var.application_insights
   depends_on                    = [module.resource_groups]
 }
+
 resource "azurerm_service_plan" "example" {
   name                = "${var.app_service_plan_name}-${var.env}"
   #resource_group_name = module.resource_groups.resource_group_ids_map.0.resource_group
