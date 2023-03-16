@@ -35,9 +35,9 @@ jobs:
   - checkout: self
   - task: InstallSSHKey@0
     inputs:
-      knownHostsEntry: $(known_host)
-      sshPublicKey: $(ssh_public_key)
-      sshKeySecureFile: $(sshKeySecureFile)
+      knownHostsEntry: ${{ parameters ['known_host'] }}
+      sshPublicKey: ${{ parameters ['ssh_public_key'] }}
+      sshKeySecureFile: ${{ parameters ['sshKeySecureFile'] }}
   - script: |                                   
       export ARM_SUBSCRIPTION_ID=${{ parameters ['tf-app-subscription-id'] }}
       export ARM_TENANT_ID=${{ parameters ['tf-app-tenant-id'] }}
