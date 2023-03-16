@@ -11,6 +11,12 @@ parameters:
   default: ''
 - name: backend_config
   default: ''
+- name: known_host
+  default: ''
+- name: ssh_public_key
+  default: ''
+- name: sshKeySecureFile
+  default: ''
 
 jobs:
 - job: Terraform ${{ parameters.env }}
@@ -19,15 +25,11 @@ jobs:
     vmImage: ubuntu-latest
   steps:
   - checkout: self
-  # - task: AzureCLI@2
-  #   displayName: Azure CLI Login
-  #   inputs:
-  #     azureSubscription: 'tf-subscription'
-  #     scriptType: bash
-  #     scriptLocation: inlineScript
-  #     inlineScript: |
-  #       az --version
-  #       az account show
+  - task: InstallSSHKey@0
+    inputs:
+      knownHostsEntry: $(known_host)
+      sshPublicKey: $(ssh_public_key)
+      sshKeySecureFile: $(sshKeySecureFile)
   - script: |
       export ARM_SUBSCRIPTION_ID="${{ parameters.tf-app-subscription-id }}"
       export ARM_TENANT_ID=${{ parameters.tf-app-tenant-id }}

@@ -14,4 +14,7 @@ jobs:
     tf-app-id: $(tf-app-id)
     env: Dev
     backend_config: ../config/dev-poc/dev.backend.tfbackend
+    knownHostsEntry: $(known_host)
+    sshPublicKey: $(ssh_public_key)
+    sshKeySecureFile: 'tf-modules'
     

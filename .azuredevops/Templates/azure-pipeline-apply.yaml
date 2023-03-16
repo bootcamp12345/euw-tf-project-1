@@ -7,6 +7,12 @@ Parameters:
   default: ''
 - name: tf-app-pw
   default: ''
+- name: known_host
+  default: ''
+- name: ssh_public_key
+  default: ''
+- name: sshKeySecureFile
+  default: ''
 
 jobs:
 - job: 
@@ -15,6 +21,11 @@ jobs:
     vmImage: ubuntu-latest
   steps:
   - checkout: self
+  - task: InstallSSHKey@0
+    inputs:
+      knownHostsEntry: $(known_host)
+      sshPublicKey: $(ssh_public_key)
+      sshKeySecureFile: $(sshKeySecureFile)
   - script: |
       export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
       export ARM_TENANT_ID="$(tf-app-tenant-id)"
