@@ -40,9 +40,9 @@ jobs:
       sshKeySecureFile: $(sshKeySecureFile)
   - script: |                                   
       export ARM_SUBSCRIPTION_ID=${{ parameters ['tf-app-subscription-id'] }}
-      export ARM_TENANT_ID=${{ parameters.tf-app-tenant-id }}
-      export ARM_CLIENT_ID=${{ parameters.tf-app-subscription-id }}
-      export ARM_CLIENT_SECRET=${{ parameters.tf-app-pw }}
+      export ARM_TENANT_ID=${{ parameters ['tf-app-tenant-id'] }}
+      export ARM_CLIENT_ID=${{ parameters ['tf-app-subscription-id'] }}
+      export ARM_CLIENT_SECRET=${{ parameters ['tf-app-pw'] }}
       pwd
       ls -al
       echo $ARM_SUBSCRIPTION_ID
@@ -50,12 +50,12 @@ jobs:
       echo $ARM_CLIENT_ID
       echo $ARM_CLIENT_SECRET
       cd scripts
-      terraform init -backend-config=${{ parameters.backend_config }}
+      terraform init -backend-config=${{ parameters ['backend_config'] }}
   - script: |
-      export ARM_SUBSCRIPTION_ID=${{ parameters.tf-app-subscription-id }}
-      export ARM_TENANT_ID=${{ parameters.tf-app-tenant-id }}
-      export ARM_CLIENT_ID=${{ parameters.tf-app-subscription-id }}
-      export ARM_CLIENT_SECRET=${{ parameters.tf-app-pw }}
+      export ARM_SUBSCRIPTION_ID=${{ parameters ['tf-app-subscription-id'] }}
+      export ARM_TENANT_ID=${{ parameters ['tf-app-tenant-id'] }}
+      export ARM_CLIENT_ID=${{ parameters ['tf-app-subscription-id'] }}
+      export ARM_CLIENT_SECRET=${{ parameters ['tf-app-pw'] }}
       pwd
       ls -al
       echo subscription_id is $ARM_SUBSCRIPTION_ID
