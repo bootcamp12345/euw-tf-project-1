@@ -11,6 +11,11 @@ jobs:
     vmImage: ubuntu-latest
   steps:
   - checkout: self
+  - task: InstallSSHKey@0
+    inputs:
+      knownHostsEntry: $(known_host)
+      sshPublicKey: $(ssh_public_key)
+      sshKeySecureFile: 'tf-modules'
   - script: |
       export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
       export ARM_TENANT_ID="$(tf-app-tenant-id)"
@@ -57,6 +62,11 @@ jobs:
     vmImage: ubuntu-latest
   steps:
   - checkout: self
+  - task: InstallSSHKey@0
+    inputs:
+      knownHostsEntry: $(known_host)
+      sshPublicKey: $(ssh_public_key)
+      sshKeySecureFile: 'tf-modules'
   - script: |
       export ARM_SUBSCRIPTION_ID="$(tf-app-subscription-id)"
       export ARM_TENANT_ID="$(tf-app-tenant-id)"
