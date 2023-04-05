@@ -5,41 +5,28 @@ trigger:
 pr: none
 
 jobs:
-- deployment: Test
-  environment: dev
-  strategy:
-    runOnce:    #rolling, canary are the other strategies that are supported
-      deploy:
-        steps:
-          - template: ../Templates/azure-pipeline-apply.yaml
-            parameters:
-              tf-app-subscription-id: $(tf-app-subscription-id)
-              tf-app-tenant-id: $(tf-app-tenant-id)
-              tf-app-pw: $(tf-app-pw)
-              tf-app-id: $(tf-app-id)
-              env: Dev
-              backend_config: ../config/dev-poc/dev.backend.tfbackend
-              known_host: $(known_host)
-              ssh_public_key: $(ssh_public_key)
-              sshKeySecureFile: 'tf-modules'
-              tf-subscription: 'tf-subscription'
+- template: ../Templates/azure-pipeline-apply.yaml
+  parameters:
+    tf-app-subscription-id: $(tf-app-subscription-id)
+    tf-app-tenant-id: $(tf-app-tenant-id)
+    tf-app-pw: $(tf-app-pw)
+    tf-app-id: $(tf-app-id)
+    env: Dev
+    backend_config: ../config/dev-poc/dev.backend.tfbackend
+    known_host: $(known_host)
+    ssh_public_key: $(ssh_public_key)
+    sshKeySecureFile: 'tf-modules'
+    tf-subscription: 'tf-subscription'
 
-- deployment: Prod
-  dependsOn: Test
-  environment: uat
-  strategy:
-    runOnce:    #rolling, canary are the other strategies that are supported
-      deploy:
-        steps:
-          - template: ../Templates/azure-pipeline-apply.yaml
-            parameters:
-              tf-app-subscription-id: $(tf-app-subscription-id)
-              tf-app-tenant-id: $(tf-app-tenant-id)
-              tf-app-pw: $(tf-app-pw)
-              tf-app-id: $(tf-app-id)
-              env: uat
-              backend_config: ../config/uat-poc/uat.backend.tfbackend
-              known_host: $(known_host)
-              ssh_public_key: $(ssh_public_key)
-              sshKeySecureFile: 'tf-modules'
-              tf-subscription: 'tf-subscription'
+- template: ../Templates/azure-pipeline-apply.yaml
+  parameters:
+    tf-app-subscription-id: $(tf-app-subscription-id)
+    tf-app-tenant-id: $(tf-app-tenant-id)
+    tf-app-pw: $(tf-app-pw)
+    tf-app-id: $(tf-app-id)
+    env: uat
+    backend_config: ../config/uat-poc/uat.backend.tfbackend
+    known_host: $(known_host)
+    ssh_public_key: $(ssh_public_key)
+    sshKeySecureFile: 'tf-modules'
+    tf-subscription: 'tf-subscription'

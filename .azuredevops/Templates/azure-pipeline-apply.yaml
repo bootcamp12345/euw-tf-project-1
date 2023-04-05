@@ -32,6 +32,7 @@ parameters:
 
 jobs:
 - job: Terraform_${{ parameters.env }}
+  environment: ${{ parameters.env }}
   displayName: Terraform_${{ parameters.env }}
   pool:
     vmImage: ubuntu-latest
