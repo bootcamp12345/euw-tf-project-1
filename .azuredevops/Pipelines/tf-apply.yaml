@@ -2,9 +2,7 @@ trigger:
   branches:
     include:
     - main
-    exclude:
-    - pr-*
-  pr: none
+pr: none
 
 jobs:
 - deployment: Test
