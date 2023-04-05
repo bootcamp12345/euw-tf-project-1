@@ -31,7 +31,7 @@ parameters:
   type: string
 
 jobs:
-- job: Terraform_${{ parameters.env }}
+- deployment: Terraform_${{ parameters.env }}
   environment: ${{ parameters.env }}
   displayName: Terraform_${{ parameters.env }}
   pool:
