@@ -1,9 +1,6 @@
+trigger: none
 pr:
-  branches:
-    include:
-    - pr-*
-    exclude:
-    - main
+- main
 
 jobs:
 - template: ../Templates/azure-pipeline.yaml
