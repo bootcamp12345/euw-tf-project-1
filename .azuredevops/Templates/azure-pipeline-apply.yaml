@@ -29,6 +29,16 @@ parameters:
 - name: tf-subscription
   default: 'tf-subscription'
   type: string
+- name: parameters
+  default: ''
+  type: string
+- name: app_insights_parameters
+  default: ''
+  type: string
+- name: rg_parameters
+  default: ''
+  type: string
+
 
 jobs:
 - deployment: Terraform_${{ parameters.env }}
@@ -81,7 +91,7 @@ jobs:
             echo secret is $ARM_CLIENT_SECRET     
             cd scripts
             echo Starting TF Plan...
-            terraform plan -var-file=../config/dev-poc/parameters.tf -var-file=../config/dev-poc/applicationinsights.auto.tfvars -var-file=../config/dev-poc/resourcegroups.auto.tfvars -var subscription_id=$(tf-app-subscription-id) -var tenant_id=$(tf-app-tenant-id) -out TFPLAN
+            terraform plan -var-file=../config/${{ parameters.env }}-poc/parameters.tf -var-file=../config/${{ parameters.env }}-poc/applicationinsights.auto.tfvars -var-file=../config/${{ parameters.env }}-poc/resourcegroups.auto.tfvars -var subscription_id=$(tf-app-subscription-id) -var tenant_id=$(tf-app-tenant-id) -out TFPLAN
         - script: |
             export ARM_SUBSCRIPTION_ID=${{ parameters ['tf-app-subscription-id'] }}
             export ARM_TENANT_ID=${{ parameters ['tf-app-tenant-id'] }}
