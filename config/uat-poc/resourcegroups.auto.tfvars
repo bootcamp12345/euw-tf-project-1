@@ -6,6 +6,7 @@ resource_groups = {
       created_by = "codycarlson"
       contact_dl = "codycarlson@microsoft.com"
       app_id    = "00000"
+      new_tag   = "value2"
     }
   }
 }
