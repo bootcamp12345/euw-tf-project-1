@@ -9,7 +9,7 @@ jobs:
     tf-app-tenant-id: $(tf-app-tenant-id)
     tf-app-pw: $(tf-app-pw)
     tf-app-id: $(tf-app-id)
-    env: Dev
+    env: dev
     backend_config: ../config/dev-poc/dev.backend.tfbackend
     known_host: $(known_host)
     ssh_public_key: $(ssh_public_key)

@@ -1,31 +1,31 @@
 variable "subscription_id" {
-    type = string
+  type = string
 }
 
 variable "tenant_id" {
-    type = string
+  type = string
 }
 
 variable "location" {
-    type = string
+  type = string
 }
 
 variable "env" {
-    type = string
+  type = string
 }
 
 variable "resource_group_name" {
-    type = string
+  type = string
 }
 
 variable "app_service_plan_name" {
-    type = string
+  type = string
 }
 variable "asp_os_type" {
-    type = string
+  type = string
 }
 variable "asp_sku" {
-    type = string
+  type = string
 }
 
 ######################################
@@ -46,7 +46,7 @@ variable "resource_groups" {
 ########APP_INSIGHTS##################
 ######################################
 variable "app_insights_resource_group_name" {
-    type = string
+  type = string
 }
 
 variable "app_insights_additional_tags" {

@@ -77,4 +77,4 @@ jobs:
       echo secret is $ARM_CLIENT_SECRET     
       cd scripts
       echo Starting TF Plan...
-      terraform plan -var-file=../config/dev-poc/parameters.tf -var-file=../config/dev-poc/applicationinsights.auto.tfvars -var-file=../config/dev-poc/resourcegroups.auto.tfvars -var subscription_id=$(tf-app-subscription-id) -var tenant_id=$(tf-app-tenant-id)
+      terraform plan -var-file=../config/${{ parameters.env }}-poc/parameters.tf -var-file=../config/${{ parameters.env }}-poc/applicationinsights.auto.tfvars -var-file=../config/${{ parameters.env }}-poc/resourcegroups.auto.tfvars -var subscription_id=$(tf-app-subscription-id) -var tenant_id=$(tf-app-tenant-id)
