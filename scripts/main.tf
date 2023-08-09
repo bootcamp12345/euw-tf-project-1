@@ -4,6 +4,7 @@
 #   location = var.location
 # }
 ####
+### Let's add a new comment
 
 module "resource_groups" {
     source          = "git@github.com:bootcamp12345/euw-tf-modules-1.git//Resource_Groups?ref=v2"
